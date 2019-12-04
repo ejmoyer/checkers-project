@@ -9,23 +9,31 @@ for (let y = 0; y < 8; y++) {
   for (let x = 0; x < 7; x++) {
     let columnDiv = document.createElement('div')
     columnDiv.setAttribute('class', 'space')
-    if ((x + y) % 2 == 0) {
+    if ((x + y) % 2 != 0) {
       columnDiv.style.background = "red";
       rowDiv.style.background = "black";
     } else {
       columnDiv.style.background = "black";
       rowDiv.style.background = "red";
     } if ((((y == 0) || (y == 2)) && (x % 2 == 0)) || ((y == 1) && (x % 2 != 0))) {
-      columnDiv.appendChild(document.createTextNode(playerOne))
-    } else if ((((y == 5) || (y == 7)) && (x % 2 == 0)) || ((y == 6) && (x % 2 != 0))) {
-      columnDiv.appendChild(document.createTextNode(playerTwo))
+      let playerOnePiece = document.createElement('p');
+      playerOnePiece.appendChild(document.createTextNode(playerOne))
+      columnDiv.appendChild(playerOnePiece)
+    } else if ((((y == 5) || (y == 7)) && (x % 2 != 0)) || ((y == 6) && (x % 2 == 0))) {
+      let playerTwoPiece = document.createElement('p');
+      playerTwoPiece.appendChild(document.createTextNode(playerTwo))
+      columnDiv.appendChild(playerTwoPiece);
     }
     board.appendChild(columnDiv);
   }
-  if (y == 6) {
-  rowDiv.appendChild(document.createTextNode(playerTwo))
+  if ((y == 5) || (y == 7)) {
+  let playerTwoPiece = document.createElement('p');
+  playerTwoPiece.appendChild(document.createTextNode(playerTwo))
+  rowDiv.appendChild(playerTwoPiece);
 } else if (y == 1) {
-  rowDiv.appendChild(document.createTextNode(playerOne))
+  let playerOnePiece = document.createElement('p');
+  playerOnePiece.appendChild(document.createTextNode(playerOne))
+  rowDiv.appendChild(playerOnePiece);
 }
 }
 }
