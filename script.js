@@ -21,6 +21,7 @@ const startGame = () => {
       square.setAttribute('class', 'space')
 
       if ((x + y) % 2 == 0) {
+        square.addEventListener("click", createMovePiece(x, y))
         square.style.background = "black";
       } else {
         square.style.background = "red";
