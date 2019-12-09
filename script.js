@@ -24,7 +24,7 @@ turnFunction(0);
     become king
   }
 }
-*/ 
+*/
 const createMovePiece = (x, y) => (event) => {
 
   if (document.getElementById('clicked') != null) {
@@ -45,12 +45,14 @@ const createMovePiece = (x, y) => (event) => {
           if ((event.target.id == (String(firstX + 1) + (String(firstY - 1)))) &&
             (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
             document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
+            event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
 
           } else if ((event.target.id == (String(firstX - 1) + (String(firstY - 1)))) &&
             (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
             document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
+            event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
           }
@@ -77,11 +79,15 @@ const createMovePiece = (x, y) => (event) => {
           if ((event.target.id == (String(firstX + 1) + (String(firstY + 1)))) &&
             (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
             document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+            console.log(event.target);
+            event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
+
             turnFunction(1);
           } else if ((event.target.id == (String(firstX - 1) + (String(firstY + 1)))) &&
             (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
             document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+            event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(1);
           }
