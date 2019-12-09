@@ -16,6 +16,15 @@ const turnFunction = (who) => {
 };
 turnFunction(0);
 
+/*const createKing = (piece) => {
+  if (event.target.id == "piece == "playerOne") {
+    become king
+  }
+  else if (piece == "playerTwo") {
+    become king
+  }
+}
+*/ 
 const createMovePiece = (x, y) => (event) => {
 
   if (document.getElementById('clicked') != null) {
@@ -25,16 +34,20 @@ const createMovePiece = (x, y) => (event) => {
       if (player == "playerTwo") {
         // if the space clicked's first element child has a class of the other player, jump further
         // if there is a piece, then let you jump further\
-        if ((event.target.firstElementChild != null) && (event.target.id == (String(x) + String(y)))) {
-          console.log("yes");
-          console.log(event.target.id)
-          console.log(firstX, firstY)
-          console.log(x, y)
+        if ((event.target.firstElementChild != null) &&
+          (event.target.id == (String(x) + String(y))) &&
+          (event.target.firstChild.className == "playerOne")) {
+          /*  console.log("yes");
+            console.log(event.target.id)
+            console.log(firstX, firstY)
+            console.log(x, y)
+            */
           if ((event.target.id == (String(firstX + 1) + (String(firstY - 1)))) &&
             (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
             document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
+
           } else if ((event.target.id == (String(firstX - 1) + (String(firstY - 1)))) &&
             (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
             document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
@@ -53,11 +66,14 @@ const createMovePiece = (x, y) => (event) => {
 
       } else if (player == "playerOne") {
 
-        if ((event.target.firstElementChild != null) && (event.target.id == (String(x) + String(y)))) {
-          console.log("no");
-          console.log(event.target.id)
-          console.log(firstX, firstY)
-          console.log(x, y)
+        if ((event.target.firstElementChild != null) &&
+          (event.target.id == (String(x) + String(y))) &&
+          (event.target.firstChild.className == "playerTwo")) {
+          /*  console.log("no");
+            console.log(event.target.id)
+            console.log(firstX, firstY)
+            console.log(x, y)
+            */
           if ((event.target.id == (String(firstX + 1) + (String(firstY + 1)))) &&
             (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
             document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
@@ -71,7 +87,8 @@ const createMovePiece = (x, y) => (event) => {
           }
         }
         if (x == (firstX + 1) && (y == (firstY + 1)) ||
-          (x == (firstX - 1)) && (y == (firstY + 1))) {
+          (x == (firstX - 1)) && (y == (firstY + 1)) &&
+          (event.target.firstChild == null)) {
           event.target.appendChild(document.getElementById('clicked'));
           document.getElementById('clicked').removeAttribute('id');
           turnFunction(1);
@@ -85,12 +102,13 @@ const createMovePiece = (x, y) => (event) => {
     console.log(event.target.className)
     console.log(x, y)
 
-    if /*((event.target.className == 'playerTwo') && */ (turn == 2) {
+    if ((event.target.className == 'playerTwo') && (turn == 2)) {
       player = 'playerTwo';
-    } else if (turn == 1) {
+      event.target.setAttribute('id', 'clicked');
+    } else if ((event.target.className == 'playerOne') && (turn == 1)) {
       player = 'playerOne';
+      event.target.setAttribute('id', 'clicked');
     }
-    event.target.setAttribute('id', 'clicked');
   }
 };
 
