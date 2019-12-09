@@ -36,14 +36,18 @@ const createMovePiece = (x, y) => (event) => {
           if ((event.target.id == (String(firstX + 1) + (String(firstY - 1)))) &&
             (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
             document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
+            event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
+            window.alert("Player 1's Turn");
 
           } else if ((event.target.id == (String(firstX - 1) + (String(firstY - 1)))) &&
             (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
             document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
+            event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
+            window.alert("Player 1's Turn");
           }
         }
         if ((x == (firstX + 1) && (y == (firstY - 1)) ||
@@ -52,6 +56,7 @@ const createMovePiece = (x, y) => (event) => {
           event.target.appendChild(document.getElementById('clicked'));
           document.getElementById('clicked').removeAttribute('id');
           turnFunction(2);
+          window.alert("Player 1's Turn");
         }
 
 
@@ -68,25 +73,34 @@ const createMovePiece = (x, y) => (event) => {
           if ((event.target.id == (String(firstX + 1) + (String(firstY + 1)))) &&
             (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
             document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+
             if ((document.getElementById('clicked').parentNode.id == "77") ||
               (document.getElementById('clicked').parentNode.id == "57") ||
               (document.getElementById('clicked').parentNode.id == "37") ||
               (document.getElementById('clicked').parentNode.id == "17")) {
               document.getElementById('clicked').setAttribute('id', 'playerKing');
             }
+            console.log(event.target);
+            event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(1);
+            window.alert("Player 2's Turn");
+
           } else if ((event.target.id == (String(firstX - 1) + (String(firstY + 1)))) &&
             (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
             document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+
             if ((document.getElementById('clicked').parentNode.id == "77") ||
               (document.getElementById('clicked').parentNode.id == "57") ||
               (document.getElementById('clicked').parentNode.id == "37") ||
               (document.getElementById('clicked').parentNode.id == "17")) {
               document.getElementById('clicked').setAttribute('id', 'playerKing');
             }
+            event.target.removeChild(event.target.firstChild);
+
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(1);
+            window.alert("Player 2's Turn");
           }
         }
         if (x == (firstX + 1) && (y == (firstY + 1)) ||
@@ -101,6 +115,7 @@ const createMovePiece = (x, y) => (event) => {
           }
           document.getElementById('clicked').removeAttribute('id');
           turnFunction(1);
+          window.alert("Player 2's Turn");
         }
       }
     }
@@ -151,5 +166,6 @@ const startGame = () => {
       board.appendChild(square);
     }
   }
+  window.alert("Player 1's Turn");
 }
 startGame();
