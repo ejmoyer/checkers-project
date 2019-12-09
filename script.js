@@ -3,12 +3,21 @@ let board = document.getElementsByClassName('board')[0];
 let firstX;
 let firstY;
 
-let jumpX;
-let jumpY;
-
 let player;
 
+let turn;
+
+const turnFunction = (who) => {
+  if (who == 1) {
+    turn = 2;
+  } else {
+    turn = 1;
+  }
+};
+turnFunction(0);
+
 const createMovePiece = (x, y) => (event) => {
+
   if (document.getElementById('clicked') != null) {
     if (event.target.nodeName != 'P') {
       console.log(event.target)
@@ -16,30 +25,56 @@ const createMovePiece = (x, y) => (event) => {
       if (player == "playerTwo") {
         // if the space clicked's first element child has a class of the other player, jump further
         // if there is a piece, then let you jump further\
-        if (event.target.firstElementChild != null) {
+        if ((event.target.firstElementChild != null) && (event.target.id == (String(x) + String(y)))) {
           console.log("yes");
-          jumpY = y - 1;
-          jumpX = x + 1;
+          console.log(event.target.id)
+          console.log(firstX, firstY)
           console.log(x, y)
-          if (jumpX == (firstX + 2) && (jumpY == (firstY - 2)) ||
-          (jumpX == (firstX - 2)) && (jumpY == (firstY - 2))) {
-            event.target.appendChild(document.getElementById('clicked'));
+          if ((event.target.id == (String(firstX + 1) + (String(firstY - 1)))) &&
+            (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
+            document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
             document.getElementById('clicked').removeAttribute('id');
+            turnFunction(2);
+          } else if ((event.target.id == (String(firstX - 1) + (String(firstY - 1)))) &&
+            (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
+            document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
+            document.getElementById('clicked').removeAttribute('id');
+            turnFunction(2);
           }
         }
-        if (x == (firstX + 1) && (y == (firstY - 1)) ||
-          (x == (firstX - 1)) && (y == (firstY - 1))) {
+        if ((x == (firstX + 1) && (y == (firstY - 1)) ||
+            (x == (firstX - 1)) && (y == (firstY - 1))) &&
+          (event.target.firstChild == null)) {
           event.target.appendChild(document.getElementById('clicked'));
           document.getElementById('clicked').removeAttribute('id');
+          turnFunction(2);
         }
 
 
       } else if (player == "playerOne") {
 
+        if ((event.target.firstElementChild != null) && (event.target.id == (String(x) + String(y)))) {
+          console.log("no");
+          console.log(event.target.id)
+          console.log(firstX, firstY)
+          console.log(x, y)
+          if ((event.target.id == (String(firstX + 1) + (String(firstY + 1)))) &&
+            (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
+            document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+            document.getElementById('clicked').removeAttribute('id');
+            turnFunction(1);
+          } else if ((event.target.id == (String(firstX - 1) + (String(firstY + 1)))) &&
+            (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
+            document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+            document.getElementById('clicked').removeAttribute('id');
+            turnFunction(1);
+          }
+        }
         if (x == (firstX + 1) && (y == (firstY + 1)) ||
           (x == (firstX - 1)) && (y == (firstY + 1))) {
           event.target.appendChild(document.getElementById('clicked'));
           document.getElementById('clicked').removeAttribute('id');
+          turnFunction(1);
         }
       }
     }
@@ -50,9 +85,9 @@ const createMovePiece = (x, y) => (event) => {
     console.log(event.target.className)
     console.log(x, y)
 
-    if (event.target.className == 'playerTwo') {
+    if /*((event.target.className == 'playerTwo') && */ (turn == 2) {
       player = 'playerTwo';
-    } else {
+    } else if (turn == 1) {
       player = 'playerOne';
     }
     event.target.setAttribute('id', 'clicked');
@@ -65,8 +100,7 @@ const startGame = () => {
     for (let x = 0; x < 8; x++) {
 
       let square = document.createElement('div')
-      square.dataset.x = x;
-      square.dataset.y = y;
+      square.setAttribute('id', (String(x) + String(y)));
       square.setAttribute('class', 'space')
 
       if ((x + y) % 2 == 0) {
