@@ -144,10 +144,10 @@ const createMovePiece = (x, y) => (event) => {
 
       else if (player == "playerTwo") {
         const pTwoKing = () => {
-          if ((document.getElementById('clicked').parentNode.id == "70") ||
-            (document.getElementById('clicked').parentNode.id == "50") ||
-            (document.getElementById('clicked').parentNode.id == "30") ||
-            (document.getElementById('clicked').parentNode.id == "10")) {
+          if ((document.getElementById('clicked').parentNode.id == "00") ||
+            (document.getElementById('clicked').parentNode.id == "20") ||
+            (document.getElementById('clicked').parentNode.id == "40") ||
+            (document.getElementById('clicked').parentNode.id == "60")) {
             document.getElementById('clicked').setAttribute('name', 'playerKing');
             document.getElementById('clicked').appendChild(document.createTextNode('KING'))
           }
