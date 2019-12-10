@@ -15,7 +15,21 @@ const turnFunction = (who) => {
   }
 };
 turnFunction(0);
-
+let whoseTurn = document.createElement('p');
+let names = ["Player Two's turn", "Player One's turn"];
+document.body.appendChild(whoseTurn);
+const playerChange = (whichOne) => {
+  whoseTurn.textContent = `${names[whichOne]}`;
+}
+/*const createKing = (piece) => {
+  if (event.target.id == "piece == "playerOne") {
+    become king
+  }
+  else if (piece == "playerTwo") {
+    become king
+  }
+}
+*/
 const createMovePiece = (x, y) => (event) => {
 
   if (document.getElementById('clicked') != null) {
@@ -47,7 +61,7 @@ const createMovePiece = (x, y) => (event) => {
             event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
-            window.alert("Player 1's Turn");
+            playerChange(1);
 
           } else if ((event.target.id == (String(firstX - 1) + (String(firstY - 1)))) &&
             (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
@@ -55,7 +69,7 @@ const createMovePiece = (x, y) => (event) => {
             event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
-            window.alert("Player 1's Turn");
+            playerChange(1);
           }
         }
         // just moving, no jump
@@ -65,9 +79,7 @@ const createMovePiece = (x, y) => (event) => {
           event.target.appendChild(document.getElementById('clicked'));
           document.getElementById('clicked').removeAttribute('id');
           turnFunction(2);
-          window.alert("Player 1's Turn");
-        } else {
-          document.getElementById('clicked').removeAttribute('id');
+          playerChange(1);
         }
 
 
@@ -100,7 +112,7 @@ const createMovePiece = (x, y) => (event) => {
             event.target.removeChild(event.target.firstChild);
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(1);
-            window.alert("Player 2's Turn");
+            playerChange(0);
 
           } else if ((event.target.id == (String(firstX - 1) + (String(firstY + 1)))) &&
             (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
@@ -117,7 +129,7 @@ const createMovePiece = (x, y) => (event) => {
 
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(1);
-            window.alert("Player 2's Turn");
+            playerChange(0);
           }
         }
         if (x == (firstX + 1) && (y == (firstY + 1)) ||
@@ -133,9 +145,7 @@ const createMovePiece = (x, y) => (event) => {
           pOneKing();
           document.getElementById('clicked').removeAttribute('id');
           turnFunction(1);
-          window.alert("Player 2's Turn");
-        } else {
-          document.getElementById('clicked').removeAttribute('id');
+          playerChange(0);
         }
       }
     }
@@ -186,6 +196,6 @@ const startGame = () => {
       board.appendChild(square);
     }
   }
-  window.alert("Player 1's Turn");
+  playerChange(1);
 }
 startGame();
