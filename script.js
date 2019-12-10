@@ -6,7 +6,7 @@ let firstY;
 let player;
 
 let turn;
-
+// test
 const turnFunction = (who) => {
   if (who == 1) {
     turn = 2;
