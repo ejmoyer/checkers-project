@@ -228,6 +228,7 @@ const createMovePiece = (x, y) => (event) => {
           (x == (firstX - 1)) && (y == (firstY + 1)) &&
           (event.target.firstChild == null)) {
           event.target.appendChild(document.getElementById('clicked'));
+          pOneKing();
           document.getElementById('clicked').removeAttribute('id');
           turnFunction(1);
           playerChange(0);
