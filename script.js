@@ -31,100 +31,106 @@ const playerChange = (whichOne) => {
 }
 */
 const createMovePiece = (x, y) => (event) => {
+  if (document.querySelector('.playerOne') == null) {
+    alert("Player Two Wins!!");
+    alert("Better luck next time Player One");
+  } else if (document.querySelector('.playerTwo') == null) {
+    alert("Player One Wins!!");
+    alert("Better luck next time Player Two");
+  } else {
+    if (document.getElementById('clicked') != null) {
+      if (event.target.nodeName != 'P') {
+        console.log(event.target)
+        console.log(x, y);
+        if (player == "playerTwo") {
+          // if the space clicked's first element child has a class of the other player, jump further
+          // if there is a piece, then let you jump further\
+          if ((event.target.firstElementChild != null) &&
+            (event.target.id == (String(x) + String(y))) &&
+            (event.target.firstChild.className == "playerOne")) {
+            /*  console.log("yes");
+              console.log(event.target.id)
+              console.log(firstX, firstY)
+              console.log(x, y)
+              */
+            if ((event.target.id == (String(firstX + 1) + (String(firstY - 1)))) &&
+              (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
+              document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
+              event.target.removeChild(event.target.firstChild);
+              document.getElementById('clicked').removeAttribute('id');
+              turnFunction(2);
+              playerChange(1);
 
-  if (document.getElementById('clicked') != null) {
-    if (event.target.nodeName != 'P') {
-      console.log(event.target)
-      console.log(x, y);
-      if (player == "playerTwo") {
-        // if the space clicked's first element child has a class of the other player, jump further
-        // if there is a piece, then let you jump further\
-        if ((event.target.firstElementChild != null) &&
-          (event.target.id == (String(x) + String(y))) &&
-          (event.target.firstChild.className == "playerOne")) {
-          /*  console.log("yes");
-            console.log(event.target.id)
-            console.log(firstX, firstY)
-            console.log(x, y)
-            */
-          if ((event.target.id == (String(firstX + 1) + (String(firstY - 1)))) &&
-            (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
-            document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-            event.target.removeChild(event.target.firstChild);
-            document.getElementById('clicked').removeAttribute('id');
-            turnFunction(2);
-            playerChange(1);
-
-          } else if ((event.target.id == (String(firstX - 1) + (String(firstY - 1)))) &&
-            (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
-            document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-            event.target.removeChild(event.target.firstChild);
+            } else if ((event.target.id == (String(firstX - 1) + (String(firstY - 1)))) &&
+              (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
+              document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
+              event.target.removeChild(event.target.firstChild);
+              document.getElementById('clicked').removeAttribute('id');
+              turnFunction(2);
+              playerChange(1);
+            }
+          }
+          if ((x == (firstX + 1) && (y == (firstY - 1)) ||
+              (x == (firstX - 1)) && (y == (firstY - 1))) &&
+            (event.target.firstChild == null)) {
+            event.target.appendChild(document.getElementById('clicked'));
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(2);
             playerChange(1);
           }
-        }
-        if ((x == (firstX + 1) && (y == (firstY - 1)) ||
-            (x == (firstX - 1)) && (y == (firstY - 1))) &&
-          (event.target.firstChild == null)) {
-          event.target.appendChild(document.getElementById('clicked'));
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(2);
-          playerChange(1);
-        }
 
 
-      } else if (player == "playerOne") {
+        } else if (player == "playerOne") {
 
-        if ((event.target.firstElementChild != null) &&
-          (event.target.id == (String(x) + String(y))) &&
-          (event.target.firstChild.className == "playerTwo")) {
-          /*  console.log("no");
-            console.log(event.target.id)
-            console.log(firstX, firstY)
-            console.log(x, y)
-            */
-          if ((event.target.id == (String(firstX + 1) + (String(firstY + 1)))) &&
-            (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
-            document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-            console.log(event.target);
-            event.target.removeChild(event.target.firstChild);
-            document.getElementById('clicked').removeAttribute('id');
-            turnFunction(1);
-            playerChange(0);
+          if ((event.target.firstElementChild != null) &&
+            (event.target.id == (String(x) + String(y))) &&
+            (event.target.firstChild.className == "playerTwo")) {
+            /*  console.log("no");
+              console.log(event.target.id)
+              console.log(firstX, firstY)
+              console.log(x, y)
+              */
+            if ((event.target.id == (String(firstX + 1) + (String(firstY + 1)))) &&
+              (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
+              document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+              console.log(event.target);
+              event.target.removeChild(event.target.firstChild);
+              document.getElementById('clicked').removeAttribute('id');
+              turnFunction(1);
+              playerChange(0);
 
-          } else if ((event.target.id == (String(firstX - 1) + (String(firstY + 1)))) &&
-            (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
-            document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-            event.target.removeChild(event.target.firstChild);
+            } else if ((event.target.id == (String(firstX - 1) + (String(firstY + 1)))) &&
+              (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
+              document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
+              event.target.removeChild(event.target.firstChild);
+              document.getElementById('clicked').removeAttribute('id');
+              turnFunction(1);
+              playerChange(0);
+            }
+          }
+          if (x == (firstX + 1) && (y == (firstY + 1)) ||
+            (x == (firstX - 1)) && (y == (firstY + 1)) &&
+            (event.target.firstChild == null)) {
+            event.target.appendChild(document.getElementById('clicked'));
             document.getElementById('clicked').removeAttribute('id');
             turnFunction(1);
             playerChange(0);
           }
-        }
-        if (x == (firstX + 1) && (y == (firstY + 1)) ||
-          (x == (firstX - 1)) && (y == (firstY + 1)) &&
-          (event.target.firstChild == null)) {
-          event.target.appendChild(document.getElementById('clicked'));
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(1);
-          playerChange(0);
         }
       }
-    }
+    } else if (event.target.nodeName != 'DIV') {
+      firstX = x;
+      firstY = y;
+      console.log(event.target.className)
+      console.log(x, y)
 
-  } else if (event.target.nodeName != 'DIV') {
-    firstX = x;
-    firstY = y;
-    console.log(event.target.className)
-    console.log(x, y)
-
-    if ((event.target.className == 'playerTwo') && (turn == 2)) {
-      player = 'playerTwo';
-      event.target.setAttribute('id', 'clicked');
-    } else if ((event.target.className == 'playerOne') && (turn == 1)) {
-      player = 'playerOne';
-      event.target.setAttribute('id', 'clicked');
+      if ((event.target.className == 'playerTwo') && (turn == 2)) {
+        player = 'playerTwo';
+        event.target.setAttribute('id', 'clicked');
+      } else if ((event.target.className == 'playerOne') && (turn == 1)) {
+        player = 'playerOne';
+        event.target.setAttribute('id', 'clicked');
+      }
     }
   }
 };
