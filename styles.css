@@ -10,3 +10,17 @@
   height: 12.5%;
   color: white;
 }
+
+.playerOne {
+  border: 3px solid blue;
+  padding: 30px;
+  background: darkblue;
+  border-radius: 50%;
+}
+
+.playerTwo {
+  border: 3px solid green;
+  padding: 30px;
+  background: darkgreen;
+  border-radius: 50%;
+}
