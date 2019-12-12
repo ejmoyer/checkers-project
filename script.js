@@ -64,15 +64,29 @@ const pTwoKing = () => {
 
 const playerJump = (check1, jump1, check2, jump2) => {
   if ((event.target.parentNode.id == String(add(firstX, check1)) + String(sub(firstY, jump1))) &&
-    (document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild == null)) {
+(document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild == null)) {
     document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).appendChild(document.getElementById('clicked'));
     document.getElementById(String(add(firstX, check1)) + String(sub(firstY, jump1))).removeChild(document.getElementById(String(add(firstX, check1)) + String(sub(firstY, jump1))).firstChild)
+    firstX = add(firstX, check2);
+    firstY = sub(firstY, jump2);
     if (document.getElementById('clicked').hasAttribute('name') == false) {
       if (player == "playerTwo") {
         pTwoKing();
       } else if (player == "playerOne") {
         pOneKing();
       }
+    }
+    if ((document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))) == null) ||
+    (document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild != null)) {
+      if (turn == 1) {
+        turn = 2;
+        playerChange(0)
+      } else if (turn == 2) {
+        turn = 1;
+        playerChange(1)
+      }
+    } else {
+      playerJump(check1, jump1, check2, jump2);
     }
     document.getElementById('clicked').removeAttribute('id');
   }
@@ -166,12 +180,8 @@ const createMovePiece = (x, y) => (event) => {
 
   whoWon();
   if (document.getElementById('clicked') != null) {
-    console.log(event.target)
-    console.log(event)
-    console.log(x, y);
 
     if ((player == "playerTwo") && (document.getElementById("clicked").hasAttribute('name'))) {
-      console.log("hello")
       if (event.target.className == "playerOne") {
 
         //jumping
@@ -195,7 +205,6 @@ const createMovePiece = (x, y) => (event) => {
       // movement
       playerKingMove(1, 1, -1, 1);
     } else if ((player == "playerOne") && (document.getElementById("clicked").hasAttribute('name'))) {
-      console.log("hello")
       if (event.target.className == "playerTwo") {
 
         //jumping
@@ -256,8 +265,6 @@ const createMovePiece = (x, y) => (event) => {
   } else if (event.target.nodeName != 'DIV') {
     firstX = x;
     firstY = y;
-    console.log(event.target.className)
-    console.log(x, y)
 
     if ((event.target.className == 'playerTwo') && (turn == 2)) {
       player = 'playerTwo';
