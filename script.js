@@ -77,7 +77,8 @@ const playerJump = (check1, jump1, check2, jump2) => {
       }
     }
     if ((document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))) == null) ||
-      (document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild != null)) {
+    ((document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild != null) &&
+  (document.getElementById(String(add(firstX, -check2)) + String(sub(firstY, jump2))).firstChild != null))) {
       if (turn == 1) {
         turn = 2;
         playerChange(0)
