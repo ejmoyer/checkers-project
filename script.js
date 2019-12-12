@@ -5,8 +5,16 @@ let firstY;
 
 let player;
 
+const add = (x, y) => {
+  return x + y;
+};
+
+const sub = (x, y) => {
+  return x - y;
+};
+
 let turn;
-// test
+
 const turnFunction = (who) => {
   if (who == 1) {
     turn = 2;
@@ -15,12 +23,14 @@ const turnFunction = (who) => {
   }
 };
 turnFunction(0);
+
 let whoseTurn = document.createElement('p');
 let names = ["Player Two's turn", "Player One's turn"];
 document.body.appendChild(whoseTurn);
+
 const playerChange = (whichOne) => {
   whoseTurn.textContent = `${names[whichOne]}`;
-}
+};
 
 const whoWon = () => {
   if (document.querySelector('.playerOne') == null) {
@@ -30,7 +40,129 @@ const whoWon = () => {
   }
 }
 
+const pOneKing = () => {
+  if (((document.getElementById('clicked').parentNode.id == "77") ||
+      (document.getElementById('clicked').parentNode.id == "57") ||
+      (document.getElementById('clicked').parentNode.id == "37") ||
+      (document.getElementById('clicked').parentNode.id == "17")) &&
+    (document.getElementById('clicked').hasAttribute('name') == false)) {
+    document.getElementById('clicked').setAttribute('name', 'playerKing');
+    document.getElementById('clicked').appendChild(document.createTextNode('KING'))
+  }
+};
+
+const pTwoKing = () => {
+  if (((document.getElementById('clicked').parentNode.id == "00") ||
+      (document.getElementById('clicked').parentNode.id == "20") ||
+      (document.getElementById('clicked').parentNode.id == "40") ||
+      (document.getElementById('clicked').parentNode.id == "60")) &&
+    (document.getElementById('clicked').hasAttribute('name') == false)) {
+    document.getElementById('clicked').setAttribute('name', 'playerKing');
+    document.getElementById('clicked').appendChild(document.createTextNode('KING'))
+  }
+};
+
+const playerJump = (check1, jump1, check2, jump2) => {
+  if ((event.target.parentNode.id == String(add(firstX, check1)) + String(sub(firstY, jump1))) &&
+    (document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild == null)) {
+    document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).appendChild(document.getElementById('clicked'));
+    document.getElementById(String(add(firstX, check1)) + String(sub(firstY, jump1))).removeChild(document.getElementById(String(add(firstX, check1)) + String(sub(firstY, jump1))).firstChild)
+    if (document.getElementById('clicked').hasAttribute('name') == false) {
+      if (player == "playerTwo") {
+        pTwoKing();
+      } else if (player == "playerOne") {
+        pOneKing();
+      }
+    }
+    document.getElementById('clicked').removeAttribute('id');
+  }
+};
+
+
+
 const createMovePiece = (x, y) => (event) => {
+
+  const playerKingMove = (check1, check2, check3, check4) => {
+    if ((x == add(firstX, check1) && (y == sub(firstY, check2)) ||
+        (x == add(firstX, check3)) && (y == sub(firstY, check4))) &&
+      (event.target.firstChild == null)) {
+      event.target.appendChild(document.getElementById('clicked'));
+      if (document.getElementById('clicked').hasAttribute('name') == false) {
+        if (player == "playerTwo") {
+          pTwoKing();
+        } else if (player == "playerOne") {
+          pOneKing();
+        }
+      }
+      document.getElementById('clicked').removeAttribute('id');
+      if (turn == 1) {
+        turn = 2;
+        playerChange(0)
+      } else if (turn == 2) {
+        turn = 1;
+        playerChange(1)
+      }
+    } else if ((x == sub(firstX, check1) && (y == add(firstY, check2)) ||
+        (x == sub(firstX, check3)) && (y == add(firstY, check4))) &&
+      (event.target.firstChild == null)) {
+      event.target.appendChild(document.getElementById('clicked'));
+      if (document.getElementById('clicked').hasAttribute('name') == false) {
+        if (player == "playerTwo") {
+          pTwoKing();
+        } else if (player == "playerOne") {
+          pOneKing();
+        }
+      }
+      document.getElementById('clicked').removeAttribute('id');
+      if (turn == 1) {
+        turn = 2;
+        playerChange(0)
+      } else if (turn == 2) {
+        turn = 1;
+        playerChange(1)
+      }
+    } else {
+      document.getElementById('clicked').removeAttribute('id');
+    }
+  };
+
+  const playerTwoMove = (check1, check2, check3, check4) => {
+    if ((x == add(firstX, check1) && (y == sub(firstY, check2)) ||
+        (x == add(firstX, check3)) && (y == sub(firstY, check4))) &&
+      (event.target.firstChild == null)) {
+      event.target.appendChild(document.getElementById('clicked'));
+      if (document.getElementById('clicked').hasAttribute('name') == false) {
+        pTwoKing();
+      }
+      document.getElementById('clicked').removeAttribute('id');
+      if (turn == 2) {
+        turn = 1;
+        playerChange(1)
+      }
+    } else {
+      document.getElementById('clicked').removeAttribute('id');
+    }
+  };
+
+  const playerOneMove = (check1, check2, check3, check4) => {
+    if ((x == sub(firstX, check1) && (y == add(firstY, check2)) ||
+        (x == sub(firstX, check3)) && (y == add(firstY, check4))) &&
+      (event.target.firstChild == null)) {
+      event.target.appendChild(document.getElementById('clicked'));
+      if (document.getElementById('clicked').hasAttribute('name') == false) {
+        if (player == "playerOne") {
+          pOneKing();
+        }
+      }
+      document.getElementById('clicked').removeAttribute('id');
+      if (turn == 1) {
+        turn = 2;
+        playerChange(0)
+      }
+    } else {
+      document.getElementById('clicked').removeAttribute('id');
+    }
+  };
 
   whoWon();
   if (document.getElementById('clicked') != null) {
@@ -43,211 +175,83 @@ const createMovePiece = (x, y) => (event) => {
       if (event.target.className == "playerOne") {
 
         //jumping
-        if ((event.target.parentNode.id == (String(firstX + 1) + (String(firstY - 1)))) &&
-          (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
-          document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX + 1) + String(firstY - 1)).removeChild(document.getElementById(String(firstX + 1) + String(firstY - 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(2);
-          playerChange(1);
-
-        } else if ((event.target.parentNode.id == (String(firstX - 1) + (String(firstY - 1)))) &&
-          (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
-          document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX - 1) + String(firstY - 1)).removeChild(document.getElementById(String(firstX - 1) + String(firstY - 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(2);
-          playerChange(1);
-        } else if ((event.target.parentNode.id == (String(firstX + 1) + (String(firstY + 1)))) &&
-          (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
-          document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX + 1) + String(firstY + 1)).removeChild(document.getElementById(String(firstX + 1) + String(firstY + 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(2);
-          playerChange(1);
-        } else if ((event.target.parentNode.id == (String(firstX - 1) + (String(firstY + 1)))) &&
-          (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
-          document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX - 1) + String(firstY + 1)).removeChild(document.getElementById(String(firstX - 1) + String(firstY + 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(2);
-          playerChange(1);
-        }
-      }
-      // just moving, no jump
-      if (x == (firstX + 1) && (y == (firstY - 1)) ||
-        (x == (firstX - 1)) && (y == (firstY - 1)) &&
-        (event.target.firstChild == null) && (event.target.nodeName != "P")) {
-        event.target.appendChild(document.getElementById('clicked'));
-        document.getElementById('clicked').removeAttribute('id');
+        playerJump(1, 1, 2, 2);
         turnFunction(2);
         playerChange(1);
-      } else if (x == (firstX + 1) && (y == (firstY + 1)) ||
-        (x == (firstX - 1)) && (y == (firstY + 1)) &&
-        (event.target.firstChild == null) && (event.target.nodeName != "P")) {
-        event.target.appendChild(document.getElementById('clicked'));
-        document.getElementById('clicked').removeAttribute('id');
+
+        playerJump(-1, 1, -2, 2);
         turnFunction(2);
         playerChange(1);
-      } else {
-        document.getElementById('clicked').removeAttribute('id');
+
+        playerJump(1, -1, 2, -2);
+        turnFunction(2);
+        playerChange(1);
+
+        playerJump(-1, -1, -2, -2);
+        turnFunction(2);
+        playerChange(1);
       }
+
+      // movement
+      playerKingMove(1, 1, -1, 1);
     } else if ((player == "playerOne") && (document.getElementById("clicked").hasAttribute('name'))) {
       console.log("hello")
       if (event.target.className == "playerTwo") {
 
         //jumping
-        if ((event.target.parentNode.id == (String(firstX + 1) + (String(firstY - 1)))) &&
-          (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
-          document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX + 1) + String(firstY - 1)).removeChild(document.getElementById(String(firstX + 1) + String(firstY - 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(1);
-          playerChange(0);
-
-        } else if ((event.target.parentNode.id == (String(firstX - 1) + (String(firstY - 1)))) &&
-          (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
-          document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX - 1) + String(firstY - 1)).removeChild(document.getElementById(String(firstX - 1) + String(firstY - 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(1);
-          playerChange(0);
-        } else if ((event.target.parentNode.id == (String(firstX + 1) + (String(firstY + 1)))) &&
-          (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
-          document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX + 1) + String(firstY + 1)).removeChild(document.getElementById(String(firstX + 1) + String(firstY + 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(1);
-          playerChange(0);
-        } else if ((event.target.parentNode.id == (String(firstX - 1) + (String(firstY + 1)))) &&
-          (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
-          document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-          document.getElementById(String(firstX - 1) + String(firstY + 1)).removeChild(document.getElementById(String(firstX - 1) + String(firstY + 1)).firstChild)
-
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(1);
-          playerChange(0);
-        }
-      }
-      // just moving, no jump
-      if (x == (firstX + 1) && (y == (firstY - 1)) ||
-        (x == (firstX - 1)) && (y == (firstY - 1)) &&
-        ((event.target.firstChild == null) && (event.target.nodeName != "P"))) {
-        event.target.appendChild(document.getElementById('clicked'));
-        document.getElementById('clicked').removeAttribute('id');
+        playerJump(1, 1, 2, 2);
         turnFunction(1);
         playerChange(0);
-      } else if (x == (firstX + 1) && (y == (firstY + 1)) ||
-        (x == (firstX - 1)) && (y == (firstY + 1)) &&
-        ((event.target.firstChild == null) && (event.target.nodeName != "P"))) {
-        event.target.appendChild(document.getElementById('clicked'));
-        document.getElementById('clicked').removeAttribute('id');
+
+        playerJump(-1, 1, -2, 2)
         turnFunction(1);
         playerChange(0);
-      } else {
-        document.getElementById('clicked').removeAttribute('id');
+
+        playerJump(1, -1, 2, -2)
+        turnFunction(1);
+        playerChange(0);
+
+        playerJump(-1, -1, -2, -2)
+        turnFunction(1);
+        playerChange(0);
       }
+      // movement
+      playerKingMove(1, 1, -1, 1)
     } // end of king
     else if (player == "playerTwo") {
-      const pTwoKing = () => {
-        if ((document.getElementById('clicked').parentNode.id == "00") ||
-          (document.getElementById('clicked').parentNode.id == "20") ||
-          (document.getElementById('clicked').parentNode.id == "40") ||
-          (document.getElementById('clicked').parentNode.id == "60")) {
-          document.getElementById('clicked').setAttribute('name', 'playerKing');
-          document.getElementById('clicked').appendChild(document.createTextNode('KING'))
-        }
-      };
+
       // jumping
       if (event.target.className == "playerOne") {
 
         //jumping
-        if ((event.target.parentNode.id == (String(firstX + 1) + (String(firstY - 1)))) &&
-          (document.getElementById(String(firstX + 2) + String(firstY - 2)).firstChild == null)) {
-          document.getElementById(String(firstX + 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-          pTwoKing();
-          document.getElementById(String(firstX + 1) + String(firstY - 1)).removeChild(document.getElementById(String(firstX + 1) + String(firstY - 1)).firstChild)
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(2);
-          playerChange(1);
-
-        } else if ((event.target.parentNode.id == (String(firstX - 1) + (String(firstY - 1)))) &&
-          (document.getElementById(String(firstX - 2) + String(firstY - 2)).firstChild == null)) {
-          document.getElementById(String(firstX - 2) + String(firstY - 2)).appendChild(document.getElementById('clicked'));
-          pTwoKing();
-          document.getElementById(String(firstX - 1) + String(firstY - 1)).removeChild(document.getElementById(String(firstX - 1) + String(firstY - 1)).firstChild)
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(2);
-          playerChange(1);
-        }
-      }
-      // just moving, no jump
-      if ((x == (firstX + 1) && (y == (firstY - 1)) ||
-          (x == (firstX - 1)) && (y == (firstY - 1))) &&
-        (event.target.firstChild == null)) {
-        event.target.appendChild(document.getElementById('clicked'));
-        pTwoKing();
-        document.getElementById('clicked').removeAttribute('id');
+        playerJump(1, 1, 2, 2)
         turnFunction(2);
         playerChange(1);
-      } else {
-        document.getElementById('clicked').removeAttribute('id');
+
+        playerJump(-1, 1, -2, 2)
+        turnFunction(2);
+        playerChange(1);
       }
 
+      // movement
+      playerTwoMove(1, 1, -1, 1);
 
 
     } else if (player == "playerOne") {
-      const pOneKing = () => {
-        if ((document.getElementById('clicked').parentNode.id == "77") ||
-          (document.getElementById('clicked').parentNode.id == "57") ||
-          (document.getElementById('clicked').parentNode.id == "37") ||
-          (document.getElementById('clicked').parentNode.id == "17")) {
-          document.getElementById('clicked').setAttribute('name', 'playerKing');
-          document.getElementById('clicked').appendChild(document.createTextNode('KING'))
-        }
-      };
+
       //jumping
       if (event.target.className == "playerTwo") {
-        if ((event.target.parentNode.id == (String(firstX + 1) + (String(firstY + 1)))) &&
-          (document.getElementById(String(firstX + 2) + String(firstY + 2)).firstChild == null)) {
-          document.getElementById(String(firstX + 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-          pOneKing();
-          console.log(event.target);
-          document.getElementById(String(firstX + 1) + String(firstY + 1)).removeChild(document.getElementById(String(firstX + 1) + String(firstY + 1)).firstChild)
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(1);
-          playerChange(0);
-
-        } else if ((event.target.parentNode.id == (String(firstX - 1) + (String(firstY + 1)))) &&
-          (document.getElementById(String(firstX - 2) + String(firstY + 2)).firstChild == null)) {
-          document.getElementById(String(firstX - 2) + String(firstY + 2)).appendChild(document.getElementById('clicked'));
-          pOneKing();
-          document.getElementById(String(firstX - 1) + String(firstY + 1)).removeChild(document.getElementById(String(firstX - 1) + String(firstY + 1)).firstChild)
-          document.getElementById('clicked').removeAttribute('id');
-          turnFunction(1);
-          playerChange(0);
-        }
-      }
-      if (x == (firstX + 1) && (y == (firstY + 1)) ||
-        (x == (firstX - 1)) && (y == (firstY + 1)) &&
-        (event.target.firstChild == null)) {
-        event.target.appendChild(document.getElementById('clicked'));
-        pOneKing();
-        document.getElementById('clicked').removeAttribute('id');
+        playerJump(1, -1, 2, -2);
         turnFunction(1);
         playerChange(0);
-      } else {
-        document.getElementById('clicked').removeAttribute('id');
-      }
-    }
 
+        playerJump(-1, -1, -2, -2)
+        turnFunction(1);
+        playerChange(0);
+      }
+      // movement
+      playerOneMove(1, 1, -1, 1);
+    }
 
   } else if (event.target.nodeName != 'DIV') {
     firstX = x;
