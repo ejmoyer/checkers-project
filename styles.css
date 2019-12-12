@@ -1,3 +1,11 @@
+p{
+  color: gold;
+  background-color: purple;
+  text-align: center;
+  line-height: 40px;
+  width: 750px;
+  margin: 0;
+}
 .board {
   display: flex;
   flex-wrap: wrap;
@@ -8,7 +16,6 @@
 .space {
   width: 12.5%;
   height: 12.5%;
-  color: white;
 }
 
 .playerOne {
@@ -18,6 +25,7 @@
   margin: 0 auto;
   background: darkblue;
   border-radius: 50%;
+  line-height: 80px;
 }
 
 .playerTwo {
@@ -27,6 +35,7 @@
   margin: 0 auto;
   background: darkgreen;
   border-radius: 50%;
+  line-height: 80px;
 }
 
 #clicked {
