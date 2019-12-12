@@ -64,7 +64,7 @@ const pTwoKing = () => {
 
 const playerJump = (check1, jump1, check2, jump2) => {
   if ((event.target.parentNode.id == String(add(firstX, check1)) + String(sub(firstY, jump1))) &&
-(document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild == null)) {
+    (document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild == null)) {
     document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).appendChild(document.getElementById('clicked'));
     document.getElementById(String(add(firstX, check1)) + String(sub(firstY, jump1))).removeChild(document.getElementById(String(add(firstX, check1)) + String(sub(firstY, jump1))).firstChild)
     firstX = add(firstX, check2);
@@ -77,7 +77,7 @@ const playerJump = (check1, jump1, check2, jump2) => {
       }
     }
     if ((document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))) == null) ||
-    (document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild != null)) {
+      (document.getElementById(String(add(firstX, check2)) + String(sub(firstY, jump2))).firstChild != null)) {
       if (turn == 1) {
         turn = 2;
         playerChange(0)
@@ -266,13 +266,12 @@ const createMovePiece = (x, y) => (event) => {
     firstX = x;
     firstY = y;
 
-      if ((event.target.className == 'playerTwo') && (turn == 2)) {
-        player = 'playerTwo';
-        event.target.setAttribute('id', 'clicked');
-      } else if ((event.target.className == 'playerOne') && (turn == 1)) {
-        player = 'playerOne';
-        event.target.setAttribute('id', 'clicked');
-      }
+    if ((event.target.className == 'playerTwo') && (turn == 2)) {
+      player = 'playerTwo';
+      event.target.setAttribute('id', 'clicked');
+    } else if ((event.target.className == 'playerOne') && (turn == 1)) {
+      player = 'playerOne';
+      event.target.setAttribute('id', 'clicked');
     }
   }
 };
