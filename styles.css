@@ -13,14 +13,22 @@
 
 .playerOne {
   border: 3px solid blue;
-  padding: 30px;
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
   background: darkblue;
   border-radius: 50%;
 }
 
 .playerTwo {
   border: 3px solid green;
-  padding: 30px;
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
   background: darkgreen;
   border-radius: 50%;
+}
+
+#clicked {
+  background: white;
 }
