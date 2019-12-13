@@ -1,4 +1,4 @@
-p{
+.turnKeep {
   color: gold;
   background-color: purple;
   text-align: center;
@@ -6,6 +6,7 @@ p{
   width: 750px;
   margin: 0;
 }
+
 .board {
   display: flex;
   flex-wrap: wrap;

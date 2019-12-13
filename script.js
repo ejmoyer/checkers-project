@@ -25,8 +25,9 @@ const turnFunction = (who) => {
 turnFunction(0);
 
 let whoseTurn = document.createElement('p');
+whoseTurn.setAttribute('class', 'turnKeep')
 let names = ["Player Two's turn", "Player One's turn"];
-document.body.appendChild(whoseTurn);
+document.body.insertBefore(whoseTurn, board)
 
 const playerChange = (whichOne) => {
   whoseTurn.textContent = `${names[whichOne]}`;
